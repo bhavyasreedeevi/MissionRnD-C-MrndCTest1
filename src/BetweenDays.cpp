@@ -28,7 +28,32 @@ struct node{
 	struct node *next;
 };
 
+int checkdate(int day, int month, int year)
+{
+	if (day == 0 || month == 0 || year == 0)
+		return(-1);
+	else if (month>12 || day>31)
+		return(-1);
+	else if (month == 2)
+	{
+		if (year % 4 == 0)
+		{
+			if (day>29)
+				return(-1);
+		}
+		else
+		{
+			if (day>28)
+				return(-1);
+		}
 
+	}
+	if (month == 4 || month == 6 || month == 9 || month == 11)
+	{
+		if (day>30)
+			return(-1);
+	}
+}
 int between_days(struct node *date1head, struct node *date2head){
 	if (date1head == NULL || date2head==NULL)
 		return -1;
@@ -46,5 +71,22 @@ int between_days(struct node *date1head, struct node *date2head){
 			curr2 = curr2->next->next;
 			y1 = curr1->data * 1000 + curr1->next->data * 100 + curr1->next->next->data * 100 + curr1->next->next->next->data * 100;
 			m2 = curr2->data * 1000 + curr2->next->data * 100 + curr1->next->next->data * 100 + curr1->next->next->next->data * 100;
+			flag1 = checkdate(d1, m1, y1);
+			flag2 = checkdate(d2, m2, y2);
+			if (flag1 != -1 && flag2 != -1)
+			{
+				if (y1 == y2 && m1 == m2 && d1!=d2)
+				{
+					return(d2 - d1 - 1);
+				}
+				if (y2 - y1 == 1 && m1 - m2 == 11 && d1 - d2 == 30)
+				{
+					return 1;
+				}
+				else
+				{
+
+				}
+			}
 	}
 }
